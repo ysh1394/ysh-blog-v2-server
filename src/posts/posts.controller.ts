@@ -19,6 +19,9 @@ export class PostsController {
 
   @Get()
   getAll(): Promise<Posts[]> {
+    this.postsService.getAll().then((data) => {
+      console.log('dat >> ', data);
+    });
     return this.postsService.getAll();
   }
 
@@ -44,6 +47,10 @@ export class PostsController {
 
   @Post()
   create(@Body() movieData: CreatePostDto) {
+    console.log(
+      '🚀 ~ file: posts.controller.ts ~ line 47 ~ PostsController ~ create ~ movieData',
+      movieData,
+    );
     return this.postsService.create(movieData);
   }
 

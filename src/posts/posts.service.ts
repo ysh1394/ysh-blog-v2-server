@@ -1,15 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreatePostDto } from './dto/createPost.dto';
 import { UpdatePostDto } from './dto/updatePost.dto';
 import { Posts } from './entities/posts.entity';
-import { PostsRepository } from './repository/posts.repository';
 
 @Injectable()
 export class PostsService {
   constructor(
-    @InjectRepository(PostsRepository)
-    private posts: PostsRepository,
+    @InjectRepository(Posts)
+    private posts: Repository<Posts>,
   ) {}
 
   async getAll(): Promise<Posts[]> {
@@ -34,6 +34,10 @@ export class PostsService {
 
   async create(data: CreatePostDto): Promise<Posts> {
     const allData = await this.getAll();
+    console.log(
+      '🚀 ~ file: posts.service.ts ~ line 37 ~ PostsService ~ create ~ allData',
+      data,
+    );
     const newData = await this.posts.create({
       id: allData.length + 1,
       ...data,
